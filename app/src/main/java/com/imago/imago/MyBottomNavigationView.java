@@ -11,7 +11,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 
