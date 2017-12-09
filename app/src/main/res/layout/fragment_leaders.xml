@@ -1,13 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout
+    android:theme="@style/AppTheme.New"
     android:layout_height="match_parent"
-    tools:context="com.imago.imago.LeadersFragment">
+    android:layout_width="match_parent"
+    android:id="@+id/activity_leaders"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+<android.support.v4.widget.SwipeRefreshLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:id="@+id/fragment_leaders_swipe_refresh_layout">
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:id="@+id/recyclerViewLeaders"/>-->
+
+</android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

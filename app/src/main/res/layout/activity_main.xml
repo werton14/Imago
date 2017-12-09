@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.imago.imago.MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/frameToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@drawable/background_gradient"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar">
+    </include>
+
+    </RelativeLayout>
+
+<android.support.v4.view.ViewPager
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_below="@id/frameToolbar"
+    android:layout_above="@id/bottomBar">
+
+</android.support.v4.view.ViewPager>
+
+    <com.example.vital.myapplication.MyBottomNavigationView
+    android:id="@+id/bottomBar"
+    android:layout_width="match_parent"
+    android:layout_height="47dp"
+    app:itemBackground="@android:color/white"
+    app:itemIconTint="@drawable/item_bar_selector"
+    app:menu="@menu/bottom_navigation_view"
+    android:layout_alignParentBottom="true">
+    </com.example.vital.myapplication.MyBottomNavigationView>
+
+</RelativeLayout>

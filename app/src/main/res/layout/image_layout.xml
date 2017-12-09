@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+            <ImageButton
+                android:id="@+id/competitive_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/backgroung_for_picture"
+                android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/competitive_image_view"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:weightSum="1">
+        <!--было 10dp в paddingLeft-->
+
+        <ImageButton
+            android:id="@+id/like_image_button"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            app:srcCompat="@mipmap/ic_favourite_blue" />
+
+        <TextView
+            android:id="@+id/like_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:paddingEnd="7dp"
+            android:paddingStart="7dp"
+            android:textColor="@color/gradient_color_left"
+            android:textSize="14sp"
+            android:typeface="serif"
+            tools:text="322" />
+
+        <ImageButton
+            android:id="@+id/warnings"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_warnings"></ImageButton>
+
+    </LinearLayout>
+
+</RelativeLayout>
