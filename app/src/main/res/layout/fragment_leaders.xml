@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_leaders"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="First Place"
+                    android:text="@string/first_place"
                     android:textColor="@android:color/holo_orange_light"
                     android:textSize="18sp" />
 
@@ -57,14 +58,13 @@
 
                     <TextView
                         android:id="@+id/like_first_place"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/like_image_button"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:paddingEnd="7dp"
                         android:paddingStart="7dp"
-                        android:text="323"
+                        tools:text="323"
                         android:textColor="@color/gradient_color_left"
                         android:textSize="14sp"
                         android:typeface="serif" />
@@ -75,6 +75,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:baselineAligned="false"
                 android:weightSum="2">
 
                 <FrameLayout
@@ -87,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="16dp"
-                        android:text="Second Place"
+                        android:text="@string/second_place"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="18sp" />
 
@@ -111,14 +112,13 @@
 
                         <TextView
                             android:id="@+id/like_text_view_second_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignLeft="@+id/like_image_button"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:paddingEnd="7dp"
                             android:paddingStart="7dp"
-                            android:text="323"
+                            tools:text="323"
                             android:textColor="@color/gradient_color_left"
                             android:textSize="14sp"
                             android:typeface="serif" />
@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="16dp"
-                        android:text="Third Place"
+                        android:text="@string/third_place"
                         android:textColor="@color/color_for_third_place"
                         android:textSize="18sp" />
 
@@ -160,14 +160,13 @@
 
                         <TextView
                             android:id="@+id/like_text_view_third_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignLeft="@+id/like_image_button"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:paddingEnd="7dp"
                             android:paddingStart="7dp"
-                            android:text="323"
+                            tools:text="323"
                             android:textColor="@color/gradient_color_left"
                             android:textSize="14sp"
                             android:typeface="serif" />
