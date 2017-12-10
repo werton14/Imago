@@ -2,9 +2,11 @@ package com.imago.imago;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -18,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
+    private MyBottomNavigationView bottomBar;
 
     private static final int START_FRAGMENT_POSITION = 1;
     private static final int NUMBER_FOR_NO_REFRESHING = 2;
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(START_FRAGMENT_POSITION);
         viewPager.setOffscreenPageLimit(NUMBER_FOR_NO_REFRESHING);
 
+        bottomBar = (MyBottomNavigationView) findViewById(R.id.bottomBar);
+
         CustomFragmentPageAdapter fragmentPageAdapter =
                 new CustomFragmentPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPageAdapter);
@@ -51,8 +56,28 @@ public class MainActivity extends AppCompatActivity {
             linearLayout.setLayoutParams(params);
         }
 
+        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.scroll:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.home:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.leaders:
+                        viewPager.setCurrentItem(2);
+                        break;
+                }
+                item.setChecked(true);
+                return false;
+            }
+        });
 
     }
+
+
 
 
 }
