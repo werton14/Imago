@@ -6,6 +6,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="gradient_color_right">#26d0ce</color>
     <color name="gradient_color_left">#1a2980</color>
-    <color name="backgroung_for_picture">#e0e0e0</color>
-    <color name="fornewbackground">#f3f5f9</color>       <!--для бэкграунда экрана если понадобиться-->
+    <color name="background_for_picture">#e0e0e0</color>
+    <color name="for_new_background">#f3f5f9</color>       <!--для бэкграунда экрана если понадобиться-->
+    <color name="color_for_third_place">#E65100</color>
 </resources>
