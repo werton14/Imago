@@ -13,10 +13,9 @@
         android:gravity="bottom"
         android:orientation="horizontal">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar">
-    </include>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"></include>
 
     </RelativeLayout>
 

@@ -1,24 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FrameLayout
-    android:theme="@style/AppTheme.New"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_leaders"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:theme="@style/AppTheme.New">
 
-<android.support.v4.widget.SwipeRefreshLayout
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:id="@+id/fragment_leaders_swipe_refresh_layout">
-
-    <ImageButton
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_leaders_swipe_refresh_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <!--<android.support.v7.widget.RecyclerView-->
+        android:layout_height="wrap_content">
+
+        <!--<android.support.v7.widget.RecyclerView-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:id="@+id/recyclerViewLeaders"/>-->
 
-</android.support.v4.widget.SwipeRefreshLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/first_place"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_for_imagebutton_first_place" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/like_image_button_first_place"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@mipmap/ic_favourite_red" />
+
+                    <TextView
+                        android:id="@+id/like_first_place"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingEnd="7dp"
+                        android:paddingStart="7dp"
+                        tools:text="323"
+                        android:textColor="@color/gradient_color_left"
+                        android:textSize="14sp"
+                        android:typeface="serif" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false"
+                android:weightSum="2">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/second_place"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/border_for_imagebutton_second_place" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/like_image_button_second_place"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@mipmap/ic_favourite_red" />
+
+                        <TextView
+                            android:id="@+id/like_text_view_second_place"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:paddingEnd="7dp"
+                            android:paddingStart="7dp"
+                            tools:text="323"
+                            android:textColor="@color/gradient_color_left"
+                            android:textSize="14sp"
+                            android:typeface="serif" />
+
+                    </LinearLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/third_place"
+                        android:textColor="@color/color_for_third_place"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/border_for_imagebutton_third_place" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/like_image_button_third_place"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@mipmap/ic_favourite_red" />
+
+                        <TextView
+                            android:id="@+id/like_text_view_third_place"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:paddingEnd="7dp"
+                            android:paddingStart="7dp"
+                            tools:text="323"
+                            android:textColor="@color/gradient_color_left"
+                            android:textSize="14sp"
+                            android:typeface="serif" />
+
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

@@ -6,13 +6,13 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-            <ImageButton
-                android:id="@+id/competitive_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/backgroung_for_picture"
-                android:scaleType="fitCenter" />
+    <ImageButton
+        android:id="@+id/competitive_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/background_for_picture"
+        android:scaleType="fitCenter" />
 
     <LinearLayout
         android:layout_width="match_parent"
