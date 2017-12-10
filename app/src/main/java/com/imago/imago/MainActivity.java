@@ -19,9 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
 
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-
     private static final int START_FRAGMENT_POSITION = 1;
     private static final int NUMBER_FOR_NO_REFRESHING = 2;
 
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             linearLayout.setLayoutParams(params);
         }
 
-        firebaseAuth = FirebaseAuth.getInstance();
 
     }
 
