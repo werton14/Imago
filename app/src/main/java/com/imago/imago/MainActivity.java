@@ -50,9 +50,5 @@ public class MainActivity extends AppCompatActivity {
                             72);
             linearLayout.setLayoutParams(params);
         }
-
-
     }
-
-
 }
