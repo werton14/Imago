@@ -1,5 +1,6 @@
 package com.imago.imago;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,19 +12,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.firestore.Transaction;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
 
@@ -33,8 +37,11 @@ import static android.content.ContentValues.TAG;
 
 public class FirebaseUtils {
     private FirebaseFirestore firestore;
-    private CollectionReference images;
-    private CollectionReference imageViews;
+    private CollectionReference imagesCr;
+    private CollectionReference imageViewsCr;
+
+    private FirebaseStorage storage;
+    private StorageReference imagesSr;
 
     private ImagesDataEventListener imagesDataEventListener;
     private LeadersEventListener leadersEventListener;
@@ -42,12 +49,59 @@ public class FirebaseUtils {
 
     private static final int LEADERS_NUMBER = 3;
 
+    private static volatile FirebaseUtils instance;
+
+    public static FirebaseUtils getInstance() {
+        FirebaseUtils localInstance = instance;
+        if (localInstance == null) {
+            synchronized (FirebaseUtils.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new FirebaseUtils();
+                }
+            }
+        }
+        return localInstance;
+    }
+
     public FirebaseUtils(){
         firestore = FirebaseFirestore.getInstance();
-        images = firestore.collection("images");
-        imageViews = firestore.collection("imageViews");
+        imagesCr = firestore.collection("images");
+        imageViewsCr = firestore.collection("imageViews");
+
+        storage = FirebaseStorage.getInstance();
+        imagesSr = storage.getReference().child("images");
 
         imageDataDownloader = new ImageDataDownloader();
+    }
+
+    public void uploadImage(byte [] imageByteArray){
+        String fileName = UUID.randomUUID().toString() + ".webp";
+        imagesSr.child(fileName).putBytes(imageByteArray)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                uploadImageData(downloadUrl);
+            }
+        });
+    }
+
+    private void uploadImageData(Uri downloadUri){
+        ImageData imageData = new ImageData(downloadUri);
+        imagesCr.add(imageData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                String imageId = documentReference.getId();
+
+                ImageViews imageViews = new ImageViews();
+                imageViewsCr.document(imageId).set(imageViews);
+            }
+        });
+
+
+
     }
 
     public void setImagesDataEventListener(ImagesDataEventListener imagesDataEventListener){
@@ -60,7 +114,7 @@ public class FirebaseUtils {
     }
 
     private void downloadLeadersImageData(){
-        images.orderBy("like", Query.Direction.ASCENDING).limit(LEADERS_NUMBER).get()
+        imagesCr.orderBy("like", Query.Direction.ASCENDING).limit(LEADERS_NUMBER).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -88,7 +142,7 @@ public class FirebaseUtils {
         }
 
         public void executeTask(){
-            imageViews.orderBy("time", Query.Direction.ASCENDING)
+            imageViewsCr.orderBy("time", Query.Direction.ASCENDING)
                     .limit(IMAGE_DATA_DOCUMENT_FOR_TASK)
                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -127,7 +181,7 @@ public class FirebaseUtils {
         }
 
         private void downloadImagesData(final List<ImageData> imageDataList, String imageId){
-            images.document(imageId).get().addOnCompleteListener(
+            imagesCr.document(imageId).get().addOnCompleteListener(
                     new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
