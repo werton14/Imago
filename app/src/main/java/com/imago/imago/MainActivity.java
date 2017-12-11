@@ -32,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
         *  and OffscreenPageLimit for no refreshing fragments.
         */
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setCurrentItem(START_FRAGMENT_POSITION);
-        viewPager.setOffscreenPageLimit(NUMBER_FOR_NO_REFRESHING);
 
         CustomFragmentPageAdapter fragmentPageAdapter =
                 new CustomFragmentPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPageAdapter);
+        viewPager.setCurrentItem(START_FRAGMENT_POSITION);
+        viewPager.setOffscreenPageLimit(NUMBER_FOR_NO_REFRESHING);
 
         // Set toolbar size for different android version.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
