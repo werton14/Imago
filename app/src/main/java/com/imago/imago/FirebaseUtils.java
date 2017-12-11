@@ -142,13 +142,14 @@ public class FirebaseUtils {
         this.leadersEventListener = leadersEventListener;
     }
 
-    public void setTaskChangedEventListener(TaskChangedEventListener taskChangedEventListener) {
+    public void setTaskChangedEventListener(final TaskChangedEventListener taskChangedEventListener) {
         this.taskChangedEventListener = taskChangedEventListener;
 
         taskFr.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
                 task = documentSnapshot.toObject(com.imago.imago.Task.class);
+                if(userData != null) taskChangedEventListener.onEvent(getTaskStatus());
             }
         });
 
@@ -156,6 +157,7 @@ public class FirebaseUtils {
             @Override
             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
                 userData = documentSnapshot.toObject(UserData.class);
+                if(task != null) taskChangedEventListener.onEvent(getTaskStatus());
             }
         });
     }
