@@ -9,9 +9,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -27,6 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
@@ -37,14 +42,21 @@ import static android.content.ContentValues.TAG;
 
 public class FirebaseUtils {
     private FirebaseFirestore firestore;
-    private CollectionReference imagesCr;
-    private CollectionReference imageViewsCr;
+    private CollectionReference imagesFr;
+    private CollectionReference imageViewsFr;
+    private CollectionReference usersFr;
+    private DocumentReference taskFr;
 
     private FirebaseStorage storage;
     private StorageReference imagesSr;
 
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+
     private ImagesDataEventListener imagesDataEventListener;
     private LeadersEventListener leadersEventListener;
+    private TaskChangedEventListener taskChangedEventListener;
+
     private ImageDataDownloader imageDataDownloader;
 
     private static final int LEADERS_NUMBER = 3;
@@ -66,11 +78,33 @@ public class FirebaseUtils {
 
     public FirebaseUtils(){
         firestore = FirebaseFirestore.getInstance();
-        imagesCr = firestore.collection("images");
-        imageViewsCr = firestore.collection("imageViews");
+        imagesFr = firestore.collection("images");
+        imageViewsFr = firestore.collection("imageViews");
+        taskFr = firestore.document("task");
+        usersFr = firestore.collection("");
+
+        taskFr.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                com.imago.imago.Task task = documentSnapshot.toObject(com.imago.imago.Task.class);
+                if(taskChangedEventListener != null) taskChangedEventListener.onEvent(task);
+            }
+        });
 
         storage = FirebaseStorage.getInstance();
         imagesSr = storage.getReference().child("images");
+
+        //TODO: fix auth later
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        if(user == null){
+            auth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                    user = authResult.getUser();
+                }
+            });
+        }
 
         imageDataDownloader = new ImageDataDownloader();
     }
@@ -89,14 +123,14 @@ public class FirebaseUtils {
 
     private void uploadImageData(Uri downloadUri){
         ImageData imageData = new ImageData(downloadUri);
-        imagesCr.add(imageData)
+        imagesFr.add(imageData)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 String imageId = documentReference.getId();
 
                 ImageViews imageViews = new ImageViews();
-                imageViewsCr.document(imageId).set(imageViews);
+                imageViewsFr.document(imageId).set(imageViews);
             }
         });
 
@@ -113,8 +147,12 @@ public class FirebaseUtils {
         this.leadersEventListener = leadersEventListener;
     }
 
+    public void setTaskChangedEventListener(TaskChangedEventListener taskChangedEventListener) {
+        this.taskChangedEventListener = taskChangedEventListener;
+    }
+
     private void downloadLeadersImageData(){
-        imagesCr.orderBy("like", Query.Direction.ASCENDING).limit(LEADERS_NUMBER).get()
+        imagesFr.orderBy("like", Query.Direction.ASCENDING).limit(LEADERS_NUMBER).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -142,7 +180,7 @@ public class FirebaseUtils {
         }
 
         public void executeTask(){
-            imageViewsCr.orderBy("time", Query.Direction.ASCENDING)
+            imageViewsFr.orderBy("time", Query.Direction.ASCENDING)
                     .limit(IMAGE_DATA_DOCUMENT_FOR_TASK)
                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -181,7 +219,7 @@ public class FirebaseUtils {
         }
 
         private void downloadImagesData(final List<ImageData> imageDataList, String imageId){
-            imagesCr.document(imageId).get().addOnCompleteListener(
+            imagesFr.document(imageId).get().addOnCompleteListener(
                     new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -246,5 +284,9 @@ public class FirebaseUtils {
 
     interface LeadersEventListener{
         public void onEvent(List<ImageData> imageDataList);
+    }
+
+    interface TaskChangedEventListener{
+        public void onEvent(com.imago.imago.Task task);
     }
 }

@@ -100,8 +100,6 @@ public class TaskFragment extends Fragment {
         byte [] imageByteArray = stream.toByteArray();
 
         firebaseUtils.uploadImage(imageByteArray);
-
-
     }
 
     private Bitmap getBitmapFromFile(Uri imageUri){
@@ -144,6 +142,5 @@ public class TaskFragment extends Fragment {
         return Bitmap.createScaledBitmap(dstBmp, OUTPUT_IMAGE_WIDTH,
                 OUTPUT_IMAGE_HEIGHT, false);
     }
-
 
 }
