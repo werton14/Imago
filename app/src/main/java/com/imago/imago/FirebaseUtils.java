@@ -82,7 +82,7 @@ public class FirebaseUtils {
         firestore = FirebaseFirestore.getInstance();
         imagesFr = firestore.collection("images");
         imageViewsFr = firestore.collection("imageViews");
-        taskFr = firestore.document("task");
+        taskFr = firestore.collection("task").document();
         usersFr = firestore.collection("users");
 
 
