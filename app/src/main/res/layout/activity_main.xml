@@ -15,7 +15,8 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar"></include>
+            layout="@layout/toolbar">
+        </include>
 
     </RelativeLayout>
 
