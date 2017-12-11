@@ -52,7 +52,7 @@
             android:layout_height="27dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/ic_warnings"></ImageButton>
+            app:srcCompat="@mipmap/ic_launcherrrrr"></ImageButton>
 
     </LinearLayout>
 

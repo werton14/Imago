@@ -1,12 +1,4 @@
 <resources>
-
-    <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-    <!--</style>-->
     <style name="AppTheme.New" parent="Theme.AppCompat">
         <item name="colorPrimaryDark">@color/gradient_color_left</item>
         <item name="android:windowBackground">@android:color/white</item>
@@ -21,5 +13,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/black</item>
     </style>
-
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/gradient_color_left</item>
+    </style>
 </resources>

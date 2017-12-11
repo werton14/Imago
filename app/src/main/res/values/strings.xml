@@ -4,4 +4,8 @@
     <string name="first_place">First Place</string>
     <string name="second_place">Second Place</string>
     <string name="third_place">Third Place</string>
+    <string name="your_task">Your Task</string>
+    <string name="for_3_days">for 3 days:</string>
+    <string name="make_ur_damn_photo">Make ur damn photo</string>
+    <string name="your_damn_rating">Your Damn Rating</string>
 </resources>

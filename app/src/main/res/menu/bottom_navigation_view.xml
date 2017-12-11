@@ -3,7 +3,7 @@
     <item
         android:id="@+id/scroll"
         android:title="@string/space"
-        android:icon="@drawable/ic_collections">
+        android:icon="@drawable/ic_collection">
     </item>
     <item
         android:id="@+id/home"
