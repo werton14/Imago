@@ -4,11 +4,11 @@ package com.imago.imago;
  * Created by werton on 12.12.17.
  */
 
-public class User {
+public class UserData {
 
-    int taskNumber;
+    private int taskNumber;
 
-    public User(){
+    public UserData(){
         taskNumber = 0;
     }
 

@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
@@ -52,6 +51,9 @@ public class FirebaseUtils {
 
     private FirebaseAuth auth;
     private FirebaseUser user;
+
+    private com.imago.imago.Task task;
+    private UserData userData;
 
     private ImagesDataEventListener imagesDataEventListener;
     private LeadersEventListener leadersEventListener;
@@ -81,15 +83,8 @@ public class FirebaseUtils {
         imagesFr = firestore.collection("images");
         imageViewsFr = firestore.collection("imageViews");
         taskFr = firestore.document("task");
-        usersFr = firestore.collection("");
+        usersFr = firestore.collection("users");
 
-        taskFr.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-                com.imago.imago.Task task = documentSnapshot.toObject(com.imago.imago.Task.class);
-                if(taskChangedEventListener != null) taskChangedEventListener.onEvent(task);
-            }
-        });
 
         storage = FirebaseStorage.getInstance();
         imagesSr = storage.getReference().child("images");
@@ -97,7 +92,7 @@ public class FirebaseUtils {
         //TODO: fix auth later
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        if(user == null){
+        if(userData == null){
             auth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
@@ -149,6 +144,24 @@ public class FirebaseUtils {
 
     public void setTaskChangedEventListener(TaskChangedEventListener taskChangedEventListener) {
         this.taskChangedEventListener = taskChangedEventListener;
+
+        taskFr.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                task = documentSnapshot.toObject(com.imago.imago.Task.class);
+            }
+        });
+
+        usersFr.document(user.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                userData = documentSnapshot.toObject(UserData.class);
+            }
+        });
+    }
+
+    private boolean getTaskStatus(){
+        return task.getNumber() == userData.getTaskNumber();
     }
 
     private void downloadLeadersImageData(){
@@ -287,6 +300,6 @@ public class FirebaseUtils {
     }
 
     interface TaskChangedEventListener{
-        public void onEvent(com.imago.imago.Task task);
+        public void onEvent(boolean taskCompleted);
     }
 }
