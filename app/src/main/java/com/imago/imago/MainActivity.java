@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MyBottomNavigationView bottombar;
 
+    private FirebaseUtils firebaseUtils;
+
     private static final int START_FRAGMENT_POSITION = 1;
     private static final int NUMBER_FOR_NO_REFRESHING = 2;
 
@@ -30,18 +32,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        viewPager = findViewById(R.id.view_pager);
+        bottombar = (MyBottomNavigationView) findViewById(R.id.bottomBar);
+
+        firebaseUtils = FirebaseUtils.getInstance();
+
         /*
         *  Init ViewPager with CustomFragmentAdapter and set starting fragment,
         *  and OffscreenPageLimit for no refreshing fragments.
         */
-        viewPager = findViewById(R.id.view_pager);
-        bottombar = (MyBottomNavigationView) findViewById(R.id.bottomBar);
 
-        CustomFragmentPageAdapter fragmentPageAdapter =
-                new CustomFragmentPageAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(fragmentPageAdapter);
-        viewPager.setCurrentItem(START_FRAGMENT_POSITION);
-        viewPager.setOffscreenPageLimit(NUMBER_FOR_NO_REFRESHING);
+        firebaseUtils.setSignedInListener(new FirebaseUtils.SignedInListener() {
+            @Override
+            public void onSignedIn() {
+                CustomFragmentPageAdapter fragmentPageAdapter =
+                        new CustomFragmentPageAdapter(getSupportFragmentManager());
+                viewPager.setAdapter(fragmentPageAdapter);
+                viewPager.setCurrentItem(START_FRAGMENT_POSITION);
+                viewPager.setOffscreenPageLimit(NUMBER_FOR_NO_REFRESHING);
+            }
+        });
 
         // Set toolbar size for different android version.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

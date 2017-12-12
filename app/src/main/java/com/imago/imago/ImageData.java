@@ -8,8 +8,13 @@ import android.net.Uri;
 
 class ImageData {
 
-    private int likeCount;
     private String imageUrl;
+    private int likeCount;
+
+    public ImageData(){
+        likeCount = 0;
+        imageUrl = null;
+    }
 
     public ImageData(Uri imageUrl){
         likeCount = 0;

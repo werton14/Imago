@@ -2,16 +2,22 @@ package com.imago.imago;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+
+import com.bumptech.glide.Glide;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,12 +25,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
 
 
 public class TaskFragment extends Fragment {
 
     private Button makePhotoButton;
+    private ImageView myImageView;
+    private TextView taskTextView;
+    private ProgressBar progressBar;
+    private TextView likeCountTextView;
 
     private Uri imageUri;
 
@@ -33,6 +42,8 @@ public class TaskFragment extends Fragment {
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int OUTPUT_IMAGE_HEIGHT = 720;
     private static final int OUTPUT_IMAGE_WIDTH = 720;
+    private static final int MILLION = 1000000;
+    private static final int ONE_HUNDRED_THOUSANDS = 100000;
 
     public TaskFragment() {
         // Required empty public constructor
@@ -48,11 +59,16 @@ public class TaskFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_task, container, false);
         makePhotoButton = rootView.findViewById(R.id.make_photo_button);
+        myImageView = rootView.findViewById(R.id.my_image_view);
+        taskTextView = rootView.findViewById(R.id.task_text_view);
+        progressBar = rootView.findViewById(R.id.progress_bar);
+        likeCountTextView = rootView.findViewById(R.id.like_count_text_view);
 
         makePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,31 +79,92 @@ public class TaskFragment extends Fragment {
 
         firebaseUtils = FirebaseUtils.getInstance();
 
+        firebaseUtils.setTaskEventListener(new FirebaseUtils.TaskChangedEventListener() {
+            @Override
+            public void onEvent(Task task) {
+                myImageView.setVisibility(View.GONE);
+                makePhotoButton.setVisibility(View.VISIBLE);
+                taskTextView.setText(task.getTask());
+                likeCountTextView.setText("-");
+            }
+        }, new FirebaseUtils.UserCompleteTaskListener() {
+            @Override
+            public void onComplete() {
+                myImageView.setVisibility(View.VISIBLE);
+                makePhotoButton.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+
+                if(updateImageUri()) {
+
+                    GlideApp.with(getActivity().getApplicationContext())
+                            .load(imageUri)
+                            .skipMemoryCache(true)
+                            .into(myImageView);
+
+                }
+            }
+        });
+
+        firebaseUtils.setLikeEventListener(new FirebaseUtils.LikeEventListener() {
+            @Override
+            public void onEvent(int likeCount) {
+
+                if(likeCount != -1) {
+                    String like = String.valueOf(likeCount);
+                    int tmp = likeCount / MILLION;
+                    if (tmp > 0) {
+                        like = String.valueOf(tmp) + "M";
+                    } else {
+                        tmp = likeCount / ONE_HUNDRED_THOUSANDS;
+                        if (tmp > 0) {
+                            like = String.valueOf(tmp) + "K";
+                        }
+                    }
+
+                    likeCountTextView.setText(like);
+                } else {
+                    likeCountTextView.setText("-");
+                }
+            }
+        });
+
         return rootView;
     }
 
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        updateImageUri();
+
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+
+    }
+
+    private boolean updateImageUri() {
         File cacheDir = getActivity().getExternalCacheDir();
         String imageFileName = "imageTmp";
         if(cacheDir != null) {
             File tmpFile = new File(cacheDir.getPath() + imageFileName + ".jpg");
-
             imageUri = Uri.fromFile(tmpFile);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-        } else {
-            Toast.makeText(getContext(), "If you go to Settings -> Apps " +
-                    "and clear data via \"Clear data\" button, you must close all opened apps" +
-                    "for using camera.", Toast.LENGTH_LONG).show();
+
+            return true;
         }
+
+        Toast.makeText(getContext(), "If you go to Settings -> Apps " +
+                "and clear data via \"Clear data\" button, you must close all opened apps" +
+                "for using camera.", Toast.LENGTH_LONG).show();
+
+        return false;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK){
             uploadImage();
+            makePhotoButton.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
         }
     }
 
