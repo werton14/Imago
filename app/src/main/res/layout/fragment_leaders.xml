@@ -24,17 +24,19 @@
             android:orientation="vertical"
             android:weightSum="2">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/relativeContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textFirstPlace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
                     android:text="@string/first_place"
                     android:textColor="@android:color/holo_orange_light"
                     android:textSize="18sp" />
@@ -43,19 +45,16 @@
                     android:id="@+id/firstPlace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@id/ratingFirstPlace"
-                    android:layout_below="@id/textFirstPlace"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/border_for_imagebutton_first_place" />
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_for_imagebutton_first_place"
+                    app:srcCompat="@color/background_for_picture" />
 
                 <LinearLayout
                     android:id="@+id/ratingFirstPlace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp">
 
                     <ImageButton
                         android:id="@+id/like_image_button_first_place"
@@ -79,23 +78,26 @@
                         tools:text="323" />
                 </LinearLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:baselineAligned="false"
                 android:weightSum="2">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/second_place"
                         android:textColor="@android:color/darker_gray"
@@ -103,14 +105,17 @@
 
                     <ImageButton
                         android:id="@+id/secondPlace"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/border_for_imagebutton_second_place" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/border_for_imagebutton_second_place"
+                        app:srcCompat="@color/background_for_picture" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center_horizontal">
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp">
 
                         <ImageButton
                             android:id="@+id/like_image_button_second_place"
@@ -134,17 +139,19 @@
                             tools:text="323" />
 
                     </LinearLayout>
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:layout_weight="1">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/third_place"
                         android:textColor="@color/color_for_third_place"
@@ -152,14 +159,17 @@
 
                     <ImageButton
                         android:id="@+id/thirdPlace"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/border_for_imagebutton_third_place" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/border_for_imagebutton_third_place"
+                        app:srcCompat="@color/background_for_picture" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center_horizontal">
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp">
 
                         <ImageButton
                             android:id="@+id/like_image_button_third_place"
@@ -183,7 +193,7 @@
                             tools:text="323" />
 
                     </LinearLayout>
-                </FrameLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -5,64 +5,62 @@
     android:layout_height="match_parent"
     tools:context="com.imago.imago.TaskFragment">
 
+    <!--TODO установить нужный padding-->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:text="@string/your_task"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="36sp" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:gravity="center"
+        android:text="@string/for_3_days"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp" />
 
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_alignParentTop="true"
-            android:text="@string/your_task"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="36sp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@id/textView"
-            android:text="@string/for_3_days"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/task_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@id/textView3"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="30sp"
-            tools:text="Fuck your mom" />
+    <TextView
+        android:id="@+id/task_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView3"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        tools:text="Fuck your mom" />
 
 
     <ImageView
         android:id="@+id/my_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/task_text_view"
         android:layout_above="@id/containerTextRating"
+        android:layout_below="@id/task_text_view"
+        android:layout_centerInParent="true"
         android:scaleType="centerCrop"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/make_photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:theme="@style/AppTheme.Button"
-        android:text="@string/make_ur_damn_photo" />
+        android:text="@string/make_ur_damn_photo"
+        android:theme="@style/AppTheme.Button" />
 
     <LinearLayout
         android:id="@+id/containerTextRating"
