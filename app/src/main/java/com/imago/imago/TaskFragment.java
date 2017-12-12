@@ -2,7 +2,6 @@ package com.imago.imago;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,12 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Key;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -43,7 +44,7 @@ public class TaskFragment extends Fragment {
     private static final int OUTPUT_IMAGE_HEIGHT = 720;
     private static final int OUTPUT_IMAGE_WIDTH = 720;
     private static final int MILLION = 1000000;
-    private static final int ONE_HUNDRED_THOUSANDS = 100000;
+    private static final int THOUSAND = 1000;
 
     public TaskFragment() {
         // Required empty public constructor
@@ -88,6 +89,34 @@ public class TaskFragment extends Fragment {
                 likeCountTextView.setText("-");
             }
         }, new FirebaseUtils.UserCompleteTaskListener() {
+
+            class IntegerVersionSignature implements Key {
+                private int currentVersion;
+
+                public IntegerVersionSignature(int currentVersion) {
+                    this.currentVersion = currentVersion;
+                }
+
+                @Override
+                public boolean equals(Object o) {
+                    if (o instanceof IntegerVersionSignature) {
+                        IntegerVersionSignature other = (IntegerVersionSignature) o;
+                        return currentVersion == other.currentVersion;
+                    }
+                    return false;
+                }
+
+                @Override
+                public int hashCode() {
+                    return currentVersion;
+                }
+
+                @Override
+                public void updateDiskCacheKey(MessageDigest md) {
+                    md.update(ByteBuffer.allocate(Integer.SIZE).putInt(currentVersion).array());
+                }
+            }
+
             @Override
             public void onComplete() {
                 myImageView.setVisibility(View.VISIBLE);
@@ -96,9 +125,9 @@ public class TaskFragment extends Fragment {
 
                 if(updateImageUri()) {
 
-                    GlideApp.with(getActivity().getApplicationContext())
+                    GlideApp.with(getContext())
                             .load(imageUri)
-                            .skipMemoryCache(true)
+                            .signature(new IntegerVersionSignature((int) System.currentTimeMillis()))
                             .into(myImageView);
 
                 }
@@ -115,7 +144,7 @@ public class TaskFragment extends Fragment {
                     if (tmp > 0) {
                         like = String.valueOf(tmp) + "M";
                     } else {
-                        tmp = likeCount / ONE_HUNDRED_THOUSANDS;
+                        tmp = likeCount / THOUSAND;
                         if (tmp > 0) {
                             like = String.valueOf(tmp) + "K";
                         }
@@ -135,11 +164,10 @@ public class TaskFragment extends Fragment {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        updateImageUri();
-
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        if(updateImageUri()) {
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-
+        }
     }
 
     private boolean updateImageUri() {
