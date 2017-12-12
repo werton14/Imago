@@ -24,29 +24,38 @@
             android:orientation="vertical"
             android:weightSum="2">
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/textFirstPlace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/first_place"
                     android:textColor="@android:color/holo_orange_light"
                     android:textSize="18sp" />
 
                 <ImageButton
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
+                    android:id="@+id/firstPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/ratingFirstPlace"
+                    android:layout_below="@id/textFirstPlace"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/border_for_imagebutton_first_place" />
 
                 <LinearLayout
+                    android:id="@+id/ratingFirstPlace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center_horizontal">
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true">
 
                     <ImageButton
                         android:id="@+id/like_image_button_first_place"
@@ -64,13 +73,13 @@
                         android:layout_weight="1"
                         android:paddingEnd="7dp"
                         android:paddingStart="7dp"
-                        tools:text="323"
                         android:textColor="@color/gradient_color_left"
                         android:textSize="14sp"
-                        android:typeface="serif" />
+                        android:typeface="serif"
+                        tools:text="323" />
                 </LinearLayout>
 
-            </FrameLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,6 +102,7 @@
                         android:textSize="18sp" />
 
                     <ImageButton
+                        android:id="@+id/secondPlace"
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:background="@drawable/border_for_imagebutton_second_place" />
@@ -118,10 +128,10 @@
                             android:layout_weight="1"
                             android:paddingEnd="7dp"
                             android:paddingStart="7dp"
-                            tools:text="323"
                             android:textColor="@color/gradient_color_left"
                             android:textSize="14sp"
-                            android:typeface="serif" />
+                            android:typeface="serif"
+                            tools:text="323" />
 
                     </LinearLayout>
                 </FrameLayout>
@@ -141,6 +151,7 @@
                         android:textSize="18sp" />
 
                     <ImageButton
+                        android:id="@+id/thirdPlace"
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:background="@drawable/border_for_imagebutton_third_place" />
@@ -166,10 +177,10 @@
                             android:layout_weight="1"
                             android:paddingEnd="7dp"
                             android:paddingStart="7dp"
-                            tools:text="323"
                             android:textColor="@color/gradient_color_left"
                             android:textSize="14sp"
-                            android:typeface="serif" />
+                            android:typeface="serif"
+                            tools:text="323" />
 
                     </LinearLayout>
                 </FrameLayout>
