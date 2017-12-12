@@ -6,17 +6,14 @@
     tools:context="com.imago.imago.TaskFragment">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_alignParentTop="true"
             android:text="@string/your_task"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp" />
@@ -26,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_below="@id/textView"
             android:text="@string/for_3_days"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp" />
@@ -35,16 +33,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_below="@id/textView3"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="30sp"
             tools:text="Fuck your mom" />
 
-    </LinearLayout>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_below="@id/textView2"
+        android:layout_above="@id/containerTextRating"
         android:visibility="invisible"/>
 
     <Button
@@ -56,12 +56,12 @@
         android:text="@string/make_ur_damn_photo" />
 
     <LinearLayout
+        android:id="@+id/containerTextRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView4"
@@ -89,9 +89,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                tools:text="10kk"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                tools:text="10kk" />
 
         </LinearLayout>
 
