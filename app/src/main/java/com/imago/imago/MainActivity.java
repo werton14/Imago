@@ -9,23 +9,18 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
-    private MyBottomNavigationView bottombar;
+    private MyBottomNavigationView bottomBar;
 
     private FirebaseUtils firebaseUtils;
 
     private static final int START_FRAGMENT_POSITION = 1;
     private static final int NUMBER_FOR_NO_REFRESHING = 2;
+    private static final int CENTRAL_BOTTOM_BAR_ITEM_POSITION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         viewPager = findViewById(R.id.view_pager);
-        bottombar = (MyBottomNavigationView) findViewById(R.id.bottomBar);
+        bottomBar = (MyBottomNavigationView) findViewById(R.id.bottomBar);
 
         firebaseUtils = FirebaseUtils.getInstance();
 
@@ -66,22 +61,41 @@ public class MainActivity extends AppCompatActivity {
             linearLayout.setLayoutParams(params);
         }
 
-        bottombar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomBar.getMenu().getItem(CENTRAL_BOTTOM_BAR_ITEM_POSITION).setChecked(true);
+
+        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case 0:
+                    case R.id.scroll:
                         viewPager.setCurrentItem(0);
                         break;
-                    case 1:
+                    case R.id.home:
                         viewPager.setCurrentItem(1);
                         break;
-                    case 2:
+                    case R.id.leaders:
                         viewPager.setCurrentItem(2);
                         break;
                 }
                 item.setChecked(true);
                 return false;
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomBar.getMenu().getItem(position).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }

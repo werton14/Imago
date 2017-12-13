@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
 
@@ -240,10 +239,11 @@ public class FirebaseUtils {
 
     public void setLeadersEventListener(LeadersEventListener leadersEventListener){
         this.leadersEventListener = leadersEventListener;
+        downloadLeadersImageData();
     }
 
     private void downloadLeadersImageData(){
-        imagesFr.orderBy("like", Query.Direction.ASCENDING).limit(LEADERS_NUMBER).get()
+        imagesFr.orderBy("likeCount", Query.Direction.DESCENDING).limit(LEADERS_NUMBER).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
