@@ -1,25 +1,28 @@
 package com.imago.imago;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
 /**
  * Created by werton on 10.12.17.
  */
 
 class ImageViews {
 
-    private long time;
+    private @ServerTimestamp Date timestamp;
     private int views;
 
     public ImageViews(){
-        time = 0L;
         views = 0;
     }
 
-    public long getTime() {
-        return time;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getViews() {

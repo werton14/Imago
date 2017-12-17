@@ -7,7 +7,7 @@
     android:background="@android:color/white">
 
     <ImageButton
-        android:id="@+id/competitive_image_view"
+        android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/competitive_image_view"
+        android:layout_below="@id/image_view"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
@@ -47,12 +47,12 @@
             tools:text="322" />
 
         <ImageButton
-            android:id="@+id/warnings"
+            android:id="@+id/alert_image_button"
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/ic_launcherrrrr"></ImageButton>
+            app:srcCompat="@mipmap/ic_launcherrrrr"/>
 
     </LinearLayout>
 

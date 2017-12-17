@@ -16,6 +16,11 @@ class ImageData {
         imageUrl = null;
     }
 
+    public ImageData(ImageData imageData){
+        this.imageUrl = imageData.getImageUrl();
+        this.likeCount = imageData.getLikeCount();
+    }
+
     public ImageData(Uri imageUrl){
         likeCount = 0;
         this.imageUrl = imageUrl.toString();

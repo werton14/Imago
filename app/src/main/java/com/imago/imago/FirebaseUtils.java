@@ -16,11 +16,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -29,8 +29,9 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -261,6 +262,10 @@ public class FirebaseUtils {
         imageDataDownloader.downloadImageData();
     }
 
+    public void downloadImagesData(){
+        imageDataDownloader.downloadImageData();
+    }
+
     private class ImageDataDownloader{
 
         private int unDownloadedData = 0;
@@ -279,24 +284,28 @@ public class FirebaseUtils {
         }
 
         public void executeTask(){
-            imageViewsFr.orderBy("time", Query.Direction.ASCENDING)
+            imageViewsFr
+                    .orderBy("timestamp", Query.Direction.ASCENDING)
                     .limit(IMAGE_DATA_DOCUMENT_FOR_TASK)
-                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     List<DocumentSnapshot> documents = task.getResult().getDocuments();
+
+                    // Sort image data from lower to upper by views
                     sortDocumentSnapshots(documents);
 
-                    List<ImageData> imageDataList = new ArrayList<>();
-                    for(int i = 0; i < documents.size(); i++){
-                        unDownloadedData++;
+                    List<ImageDataExtended> imageDataList = new ArrayList<>();
+
+                    for(int i = 0; i < documents.size() / 2; i++){
                         unUpdatedImageViews++;
 
                         DocumentReference documentRef = documents.get(i).getReference();
+                        updateImageViews(documentRef);
                         String id = documentRef.getId();
                         if(!imageDataIds.contains(id)){
-                            ImageViews views = documents.get(i).toObject(ImageViews.class);
-                            updateImageViews(documentRef, views);
+                            unDownloadedData++;
                             imageDataIds.add(id);
                             downloadImagesData(imageDataList, id);
                         }
@@ -317,12 +326,13 @@ public class FirebaseUtils {
             });
         }
 
-        private void downloadImagesData(final List<ImageData> imageDataList, String imageId){
+        private void downloadImagesData(final List<ImageDataExtended> imageDataList, final String imageId){
             imagesFr.document(imageId).get().addOnCompleteListener(
                     new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    imageDataList.add(task.getResult().toObject(ImageData.class));
+                    ImageData imageData = task.getResult().toObject(ImageData.class);
+                    imageDataList.add(new ImageDataExtended(imageData, imageId));
                     unDownloadedData--;
                     if(unDownloadedData == 0){
                         imagesDataEventListener.onEvent(imageDataList);
@@ -332,11 +342,12 @@ public class FirebaseUtils {
 
         }
 
-        @ServerTimestamp Date date;
-        private void updateImageViews(DocumentReference documentReference,
-                                      ImageViews views){
-            views.setTime(date.getTime());
-            documentReference.set(views).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        private void updateImageViews(DocumentReference documentReference){
+            Map<String,Object> updates = new HashMap<>();
+            updates.put("timestamp", FieldValue.serverTimestamp());
+
+            documentReference.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     unUpdatedImageViews--;
@@ -374,6 +385,21 @@ public class FirebaseUtils {
 
     }
 
+    public void makeLike(String imageId, boolean likeStatus){
+
+        firestore.runTransaction(new Transaction.Function<ImageData>() {
+            @Nullable
+            @Override
+            public ImageData apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+
+
+                return null;
+            }
+        });
+
+
+    }
+
 
     // Callback interfaces
 
@@ -382,7 +408,7 @@ public class FirebaseUtils {
     }
 
     interface ImagesDataEventListener{
-        public void onEvent(List<ImageData> imagesData);
+        public void onEvent(List<ImageDataExtended> imagesData);
     }
 
     interface LeadersEventListener{
