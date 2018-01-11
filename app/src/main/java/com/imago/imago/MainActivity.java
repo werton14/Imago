@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyBottomNavigationView bottomBar;
+    private ImageView imageView;
 
     private FirebaseUtils firebaseUtils;
 
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         bottomBar = (MyBottomNavigationView) findViewById(R.id.bottomBar);
+        imageView = (ImageView) findViewById(R.id.background);
+
+        GlideApp.with(getApplicationContext()).load(R.drawable.leader).into(imageView);
 
         firebaseUtils = FirebaseUtils.getInstance();
 

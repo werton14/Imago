@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/architects_daughter"
                     android:text="@string/first_place"
                     android:textColor="@android:color/holo_orange_light"
                     android:textSize="18sp" />
@@ -66,11 +67,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:fontFamily="@font/architects_daughter"
                         android:paddingEnd="7dp"
                         android:paddingStart="7dp"
                         android:textColor="@color/gradient_color_left"
                         android:textSize="14sp"
-                        android:typeface="serif"
                         tools:text="323" />
                 </LinearLayout>
 
@@ -95,6 +96,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="16dp"
+                        android:fontFamily="@font/architects_daughter"
                         android:text="@string/second_place"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="18sp" />
@@ -127,11 +129,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
+                            android:fontFamily="@font/architects_daughter"
                             android:paddingEnd="7dp"
                             android:paddingStart="7dp"
                             android:textColor="@color/gradient_color_left"
                             android:textSize="14sp"
-                            android:typeface="serif"
                             tools:text="323" />
 
                     </LinearLayout>
@@ -149,6 +151,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="16dp"
+                        android:fontFamily="@font/architects_daughter"
                         android:text="@string/third_place"
                         android:textColor="@color/color_for_third_place"
                         android:textSize="18sp" />
@@ -181,11 +184,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
+                            android:fontFamily="@font/architects_daughter"
                             android:paddingEnd="7dp"
                             android:paddingStart="7dp"
                             android:textColor="@color/gradient_color_left"
                             android:textSize="14sp"
-                            android:typeface="serif"
                             tools:text="323" />
 
                     </LinearLayout>

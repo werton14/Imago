@@ -11,29 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:fontFamily="@font/architects_daughter"
         android:gravity="center_horizontal"
         android:text="@string/your_task"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="36sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView"
+        android:fontFamily="@font/architects_daughter"
         android:gravity="center"
         android:text="@string/for_3_days"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/task_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView3"
+        android:fontFamily="@font/architects_daughter"
         android:gravity="center"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"
+        android:textSize="18sp"
         tools:text="Fuck your mom" />
 
 
@@ -59,7 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:fontFamily="@font/architects_daughter"
         android:text="@string/make_ur_damn_photo"
+        android:textSize="14sp"
         android:theme="@style/AppTheme.Button" />
 
     <LinearLayout
@@ -74,10 +79,11 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/architects_daughter"
             android:gravity="center_horizontal"
             android:text="@string/your_damn_rating"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -96,8 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/architects_daughter"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
+                android:textSize="14sp"
                 tools:text="10kk" />
 
         </LinearLayout>

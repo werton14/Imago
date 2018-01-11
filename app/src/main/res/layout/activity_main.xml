@@ -5,11 +5,18 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/sunset" />
+
     <RelativeLayout
         android:id="@+id/frame_toolbar"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:background="@drawable/background_gradient"
+        android:background="@android:color/transparent"
         android:gravity="bottom"
         android:orientation="horizontal">
 
@@ -33,7 +40,7 @@
     android:id="@+id/bottomBar"
     android:layout_width="match_parent"
     android:layout_height="47dp"
-    app:itemBackground="@android:color/white"
+    app:itemBackground="@android:color/transparent"
     app:itemIconTint="@drawable/item_bar_selector"
     app:menu="@menu/bottom_navigation_view"
     android:layout_alignParentBottom="true">
